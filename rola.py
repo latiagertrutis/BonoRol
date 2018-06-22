@@ -6,7 +6,7 @@
 #    By: mrodrigu <mrodrigu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/12 19:05:47 by mrodrigu          #+#    #+#              #
-#    Updated: 2018/06/22 12:48:04 by mrodrigu         ###   ########.fr        #
+#    Updated: 2018/06/22 15:48:20 by mrodrigu         ###   ########.fr        #
 #   git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d                                                                           #
 # **************************************************************************** #
 
@@ -50,15 +50,7 @@ def get_last_update_id(updates):
         update_id = int(update["update_id"])
     return (update_id)
 
-def dados(update, text, chat):
-	user = None
-	try:
-		user = update[0]["edited_message"]["from"]["first_name"]
-	except:
-		try:
-			user = update[0]["message"]["from"]["first_name"]
-		except:
-			return
+def dados(text, chat, user):
 	pos = text.find('D')
 	if (pos == 1):
 		cuant = 1
@@ -72,34 +64,39 @@ def dados(update, text, chat):
 	else:
 		send_message("*Formato de dado incorrecto*", chat)
 		return
-	print("pos: " + str(pos) + "\ndice: " + str(dice))
 	if (cuant <= 0 or cuant > 100 or dice <= 0 or dice > 1000):
 		send_message("*Formato de dado incorrecto*", chat)
 		return
 	for i in range(0, cuant):
 			send_message("*" + user + "\nD" + str(dice) + ":* " + str(random.randint(1, dice)), chat)
 
+def search_message(updates):
+	for update in updates["result"]:
+            for cosa in update:
+                    if "message" in cosa:
+                            return(update[cosa])
+
 def handle_updates(updates):
 #	cosa = updates["result"]
 #	print(cosa)
 #	print("\n\n")
 #	print(cosa[0]["message"])
-	update = updates["result"]
-	print(update[0]["message"])
-	text = None
-	chat = None
-	try:
-		text = update[0]["edited_message"]["text"]
-		chat = update[0]["edited_message"]["chat"]["id"]
-	except:
-		try:
-			text = update[0]["message"]["text"]
-			chat = update[0]["message"]["chat"]["id"]
-		except:
-			pass
+    update = search_message(updates)
+    text = update["text"]
+    chat = update["chat"]["id"]
+    user = update["from"]["first_name"]
+	# try:
+	# 	text = update[0]["edited_message"]["text"]
+	# 	chat = update[0]["edited_message"]["chat"]["id"]
+	# except:
+	# 	try:
+	# 		text = update[0]["message"]["text"]
+	# 		chat = update[0]["message"]["chat"]["id"]
+	# 	except:
+	# 		pass
 
-	if (text and chat and '/' in text and 'D' in text):
-		dados(update, text, chat)
+    if (text and chat and '/' in text and 'D' in text):
+            dados(text, chat, user)
 
 def main():
     db.setup();
