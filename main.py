@@ -6,7 +6,7 @@
 #    By: mrodrigu <mrodrigu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/12 00:13:38 by mrodrigu          #+#    #+#              #
-#    Updated: 2018/06/12 10:08:23 by mrodrigu         ###   ########.fr        #
+#    Updated: 2018/06/22 17:30:09 by mrodrigu         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,16 +18,16 @@ from dataBase import *
 db = DBHelper();
 
 def build_keyboard(items):
-    keyboard = [[item] for item in items]
-    reply_markup = {"keyboard":keyboard, "one_time_keyboard": True}
-    return json.dumps(reply_markup)
+	keyboard = [[item] for item in items]
+	reply_markup = {"keyboard":keyboard, "one_time_keyboard": True}
+	return json.dumps(reply_markup)
 
 def handle_updates(updates):
-    for update in updates["result"]:
-        print(update)
-        text = update["message"]["text"]
-        chat = update["message"]["chat"]["id"]
-        print(text)
+	for update in updates["result"]:
+		print(update)
+		text = update["message"]["text"]
+		chat = update["message"]["chat"]["id"]
+		print(text)
 
 def main():
     db.setup();
