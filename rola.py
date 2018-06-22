@@ -6,7 +6,7 @@
 #    By: mrodrigu <mrodrigu@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/06/12 19:05:47 by mrodrigu          #+#    #+#              #
-#    Updated: 2018/06/12 21:36:15 by mrodrigu         ###   ########.fr        #
+#    Updated: 2018/06/22 12:48:04 by mrodrigu         ###   ########.fr        #
 #   git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d                                                                           #
 # **************************************************************************** #
 
@@ -15,14 +15,12 @@ import requests
 import time
 import random
 import urllib
-import telebot
 from dataBase import *
 
 TOKEN = "585152603:AAGS-XKYqZp4QxjqwmmLGQ31o_pHxMFF204"
 URL = "https://api.telegram.org/bot{}/".format(TOKEN)
 
 db = DBHelper();
-tb = telebot.TeleBot(TOKEN)
 
 def send_message(text, chat_id):
 #	text = urllib.parse.quote_plus(text)
